@@ -24,7 +24,18 @@ var app = this.app || {};
 
   function setData(trees) {
     _map.setTrees(trees, module.palettes['nativity']);
-    species = trees.reduce((acc, val) => acc.add(val['name_common']), new Set());
+    species = {};
+    trees.forEach(tree => {
+      if (!species[tree.name_botanical]) {
+        species[tree.name_botanical] = {
+          name_common: tree.name_common,
+          count: 0
+        };
+      } else {
+        species[tree.name_botanical].count++;
+      }
+    });
+
     _speciesFilter.setSpecies(species);
     document.getElementById('loading').classList.add('hidden');
   }

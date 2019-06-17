@@ -32,11 +32,12 @@ var app = this.app || {};
 
   SpeciesFilter.prototype.setSpecies = function(species) {
     // Setup the species dropdown.
-    this.species = Array.from(species).filter(s => s !== 'Vacant Site').sort();
+    const speciesNames = Object.keys(species).filter(s => s !== 'Vacant Site').sort();
+    this.species = species;
 
-    this.species.forEach(s => {
+    speciesNames.forEach(s => {
       var option = document.createElement('option');
-      option.text  = s;
+      option.text  = `${species[s].name_common} (${s})`;
       option.value = s;
       filter.appendChild(option);
     });
